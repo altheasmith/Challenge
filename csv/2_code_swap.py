@@ -10,29 +10,44 @@ import pandas as pd
 
 def code_swap():
     print "Reading CSV..."
-    # Opening csv file and creating csv DictReader for test.csv file
+    # Opens csv file and creating csv DictReader for test.csv file
     initial_file = open('test.csv', 'rb')
     csv_reader = csv.DictReader(initial_file)
-    # Using pandas to create lists out of state name & abbreviation columns
-    # without opening/reading state file twice with csv module
+    # Creates lists out of state name & abbreviation columns with pandas to
+    # avoid opening/reading state file twice with csv module
     state_csv = pd.read_csv('state_abbreviations.csv')
     state_abbrs = state_csv.state_abbr.tolist()
     state_names = state_csv.state_name.tolist()
-    # Setting fieldnames variable for DictWriter to use
-    fieldnames = next(csv_reader).keys()
-    # Creating solution csv file & csv DictWriter
+    # Sets fieldnames variable for DictWriter to use
+    fieldnames = csv_reader.fieldnames
+    # Creates solution csv file & csv DictWriter
     solution_file = open('solution.csv', 'wb')
     csv_writer = csv.DictWriter(solution_file, fieldnames=fieldnames)
-    # Writing column headings
+    # Writes column headings
     csv_writer.writeheader()
     print "Replacing State Abbreviation with State Name..."
     for row in csv_reader:
-        # Switching state abbreviation with state name in the spreadsheet using
+        # Switches state abbreviation with state name in the spreadsheet using
         # the index of the state abbreviations in the lists created with pandas
         row['state'] = state_names[state_abbrs.index(row['state'])]
-        # Writing solution csv with state name instead of state abbreviation
+        # Writes solution csv with state name instead of state abbreviation
         csv_writer.writerow(row)
     print "Replacement Complete"
     return
 
+
+# To run from command line:
+'''
+python 2_code_swap.py
+'''
+
+#------FOR RUNNING FROM COMMAND LINE------#
 code_swap()
+#------FOR RUNNING FROM COMMAND LINE------#
+
+# To run from python shell, comment out the above line, and enter the lines
+# below into the python shell:
+'''
+from csv import code_swap
+code_swap()
+'''
