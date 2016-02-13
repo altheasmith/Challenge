@@ -24,7 +24,7 @@ def string_cleaning():
         # Writes new spreadsheet with fixed "bio" rows
         csv_writer.writerow(row)
     print "Cleaning Complete"
-    return
+    # Nothing to return - output is in csv file
 
 
 # To run from command line:

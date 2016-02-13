@@ -69,7 +69,7 @@ def date_offset():
         # column:
         csv_writer.writerow(row)
     print "Validation Complete"
-    return
+    # Nothing to return - output is in csv file
 
 
 # To run from command line:

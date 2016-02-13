@@ -33,7 +33,7 @@ def code_swap():
         # Writes solution csv with state name instead of state abbreviation
         csv_writer.writerow(row)
     print "Replacement Complete"
-    return
+    # Nothing to return - output is in csv file
 
 
 # To run from command line:

@@ -102,6 +102,7 @@ def csv_clean():
         # and incomplete/invalid dates in the 'start_date_description' column:
         csv_writer.writerow(row)
     print "Cleaning Complete"
+    # Nothing to return - output is in csv file
 
 # To run from command line:
 '''
