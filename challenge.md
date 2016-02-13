@@ -1,4 +1,4 @@
-Part 1 - CSV Test
+###Part 1 - CSV Test
 
 TODO Write a script to transform input CSV to desired output CSV.
 
@@ -10,15 +10,15 @@ You will find a CSV file available for download here: [test.csv](https://s3.amaz
 Your script should take "test.csv" as input and produce a cleansed "solution.csv" file according to the step requirements above. Please attach your "solution.csv" file along with your solution code in your reply!
 
 
-
-Part 2 - Web Scrape
+###Part 2 - Web Scrape
 
 TODO Write a script to scrape a sample site and output its data in JSON.
 
 [edgar](http://data-interview.enigmalabs.org/companies/) is a company listings site containing ten pages of company links. Each link endpoint holds company-specific data such as name, description and address. The sole requirement of this part of the test is to produce JSON of all of the company listings data for the site.
 
 
-Assessment Criteria
+
+####Assessment Criteria
 
 Your ability to effectively solve the problems posed.
 Your ability to solve these problems in a clear and logical manner, with tasteful design.
