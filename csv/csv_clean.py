@@ -34,10 +34,10 @@ from datetime import datetime
 import dateutil.parser as parser
 import pandas as pd
 
-def csv_clean():
+def csv_clean(csv_file):
     print "Reading CSV..."
     # Opening csv file and creating csv DictReader:
-    initial_file = open('test.csv', 'rb')
+    initial_file = open(csv_file, 'rb')
     csv_reader = csv.DictReader(initial_file)
     # Setting fieldnames variable for DictWriter to use, including new column
     # for invalid dates
@@ -107,12 +107,12 @@ python csv_clean.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
-csv_clean()
+csv_clean('test.csv')
 #-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines
 # below into the python shell:
 '''
 from csv import csv_clean
-csv_clean()
+csv_clean('test.csv')
 '''

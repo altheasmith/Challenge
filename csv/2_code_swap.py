@@ -8,10 +8,10 @@
 import csv
 import pandas as pd
 
-def code_swap():
+def code_swap(csv_file):
     print "Reading CSV..."
     # Opens csv file and creating csv DictReader for test.csv file
-    initial_file = open('test.csv', 'rb')
+    initial_file = open(csv_file, 'rb')
     csv_reader = csv.DictReader(initial_file)
     # Creates lists out of state name & abbreviation columns with pandas to
     # avoid opening/reading state file twice with csv module
@@ -42,7 +42,7 @@ python 2_code_swap.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
-code_swap()
+code_swap('test.csv')
 #-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines

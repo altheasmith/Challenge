@@ -12,10 +12,10 @@ import csv
 from datetime import datetime
 import dateutil.parser as parser
 
-def date_offset():
+def date_offset(csv_file):
     print "Reading CSV..."
     # Opens csv file and creating csv DictReader:
-    initial_file = open('test.csv', 'rb')
+    initial_file = open(csv_file, 'rb')
     csv_reader = csv.DictReader(initial_file)
     # Sets fieldnames variable for DictWriter to use, including new column
     # for invalid dates
@@ -76,12 +76,12 @@ python 3_date_offset.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
-date_offset()
+date_offset('test.csv')
 #-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines
 # below into the python shell:
 '''
 from csv import date_offset
-date_offset()
+date_offset('test.csv')
 '''

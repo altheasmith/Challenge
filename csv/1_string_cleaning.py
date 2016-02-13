@@ -5,10 +5,10 @@
 
 import csv
 
-def string_cleaning():
+def string_cleaning(csv_file):
     print "Reading CSV..."
     # Opens csv file and creating csv DictReader:
-    initial_file = open('test.csv', 'rb')
+    initial_file = open(csv_file, 'rb')
     csv_reader = csv.DictReader(initial_file)
     # Sets fieldnames variable for DictWriter to use
     fieldnames = csv_reader.fieldnames
@@ -33,7 +33,7 @@ python 1_string_cleaning.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
-string_cleaning()
+string_cleaning('test.csv')
 #-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines
