@@ -64,12 +64,12 @@ def csv_clean():
         try:
             # Dateutil.parser assigns a default value to any missing date
             # information. To avoid allowing incomplete dates with added
-            # default date information to get into the validated dates data set,
-            # this is a workaround to check whether any default values are in
-            # any given date. Dateutil.parser allows a default date as a
-            # parameter, so by parsing the date with two different defaults,
-            # the end results will be different if any of the defaults were
-            # used.
+            # default date information to get into the validated dates data
+            # set, this is a workaround to check whether any default values
+            # are in any given date. Dateutil.parser allows a default date
+            # as a parameter, so by parsing the date with two different
+            # defaults, the end results will be different if any of the
+            # defaults were used.
             #
             # Parses date with Oct 16, 2000 as the default:
             row_parse1 = parser.parse(row['start_date'],
@@ -97,7 +97,7 @@ def csv_clean():
             row['start_date_description'] = row['start_date']
             # And the start_date column is set to blank:
             row['start_date'] = ''
-        # Writing new spreadsheet with fixed "bio" rows, state name instead of
+        # Writes new spreadsheet with fixed "bio" rows, state name instead of
         # state abbreviation, and only validated dates in 'start_date' column,
         # and incomplete/invalid dates in the 'start_date_description' column:
         csv_writer.writerow(row)
