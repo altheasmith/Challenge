@@ -86,11 +86,8 @@ def csv_clean():
                 row['start_date_description'] = ''
             else:
                 # If the two parsed dates are not the same, but both parseable,
-                # the date is incomplete. The incomplete date is put in the
-                # start_date_description column:
-                row['start_date_description'] = row['start_date']
-                # And the start_date column is set to blank:
-                row['start_date'] = ''
+                # the date is incomplete, and incurs the ValueError exception:
+                raise ValueError('Incomplete Date')
         except ValueError:
             # If the date is unparseable by dateutil.parser, it is invalid, and
             # the invalid entry is put in the start_date_description column:
