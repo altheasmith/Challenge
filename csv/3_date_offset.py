@@ -77,7 +77,7 @@ python 3_date_offset.py
 
 #------FOR RUNNING FROM COMMAND LINE------#
 date_offset()
-#------FOR RUNNING FROM COMMAND LINE------#
+#-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines
 # below into the python shell:

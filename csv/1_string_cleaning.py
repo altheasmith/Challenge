@@ -34,7 +34,7 @@ python 1_string_cleaning.py
 
 #------FOR RUNNING FROM COMMAND LINE------#
 string_cleaning()
-#------FOR RUNNING FROM COMMAND LINE------#
+#-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines
 # below into the python shell:

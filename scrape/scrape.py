@@ -52,8 +52,6 @@ def company_info(company_link):
     # company name, which will serve as the key - value pair respectively in
     # the final dictionary of info.
     #------------------------------------------------------------------------#
-    # Initializes company info dictionary:
-    info_dict = {}
     # Creates url to scrape for company info:
     url = domain + company_link
     # Retrieves webpage as html "soup" with Beautiful Soup/get_soup() function:
@@ -63,11 +61,9 @@ def company_info(company_link):
     # List comprehension for retrieving lists of each key value pair in
     # company information table:
     cell_list = [row.find_all('td') for row in rows]
-    # Iterates through key value pairs of company data tags, returns the
-    # text value for each, and creates a dictionary entry for the key-value
-    # pair of a company information item:
-    for cell in cell_list:
-        info_dict[cell[0].text] = cell[1].text
+    # Creates a dictionary entry for each key-value pair of a company
+    # information item in an html table row:
+    info_dict = {cell[0].text: cell[1].text for cell in cell_list}
     # Stores the company name as its own variable, for the creation of a key -
     # value pair of {company name: {company data}} in the final dictionary:
     company_name = info_dict['Company Name']
@@ -136,12 +132,12 @@ def data_to_json():
     #----------------PRINT----------------#
     print "Company Data Information (Unicode Encoded):"
     pp.pprint(company_info_dict)
-    #----------------PRINT----------------#
+    #-------------------------------------#
     # Uncomment these two lines to save the JSON data to a file:
     #----------------SAVE----------------#
     # with open('company_data.json', 'w') as outfile:
     #     json.dump(company_info_dict, outfile)
-    #----------------SAVE----------------#
+    #------------------------------------#
     return company_info_json
 
 # To run from command line:
@@ -151,7 +147,7 @@ python scrape.py
 
 #------FOR RUNNING FROM COMMAND LINE------#
 data_to_json()
-#------FOR RUNNING FROM COMMAND LINE------#
+#-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines
 # below into the python shell:

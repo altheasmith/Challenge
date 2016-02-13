@@ -108,7 +108,7 @@ python csv_clean.py
 
 #------FOR RUNNING FROM COMMAND LINE------#
 csv_clean()
-#------FOR RUNNING FROM COMMAND LINE------#
+#-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines
 # below into the python shell:

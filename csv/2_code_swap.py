@@ -43,7 +43,7 @@ python 2_code_swap.py
 
 #------FOR RUNNING FROM COMMAND LINE------#
 code_swap()
-#------FOR RUNNING FROM COMMAND LINE------#
+#-----------------------------------------#
 
 # To run from python shell, comment out the above line, and enter the lines
 # below into the python shell:
