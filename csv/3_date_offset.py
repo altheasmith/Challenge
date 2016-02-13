@@ -12,17 +12,35 @@ import csv
 from datetime import datetime
 import dateutil.parser as parser
 
-initial_file = open('test.csv', 'rb')
-fieldnames_reader = csv.reader(initial_file)
-fieldnames = fieldnames_reader.next() + ['start_date_description']
-initial_file = open('test.csv', 'rb')
-csv_reader = csv.DictReader(initial_file)
+def date_offset():
+    print "Reading CSV..."
+    initial_file = open('test.csv', 'rb')
+    fieldnames_reader = csv.reader(initial_file)
+    fieldnames = fieldnames_reader.next() + ['start_date_description']
+    initial_file = open('test.csv', 'rb')
+    csv_reader = csv.DictReader(initial_file)
+    solution_file = open('solution.csv', 'wb')
+    csv_writer = csv.DictWriter(solution_file, fieldnames=fieldnames)
+    csv_writer.writeheader()
+    print "Validating Dates..."
+    for row in csv_reader:
+        row['start_date_description'] = row['start_date']
+        try:
+            row_parse1 = parser.parse(row['start_date'],
+                                        default=datetime(2000, 10, 16)).date()
+            row_parse2 = parser.parse(row['start_date'],
+                                        default=datetime(2008, 12, 3)).date()
+            if row_parse1 == row_parse2:
+                row['start_date'] = row_parse1
+                row['start_date_description'] = ''
+            else:
+                row['start_date_description'] = row['start_date']
+                row['start_date'] = ''
+        except ValueError:
+            row['start_date_description'] = row['start_date']
+            row['start_date'] = ''
+        csv_writer.writerow(row)
+    print "Validation Complete"
+    return
 
-# solution_file = open('solution.csv', 'wb')
-# csv_writer = csv.DictWriter(solution_file, fieldnames=fieldnames)
-# csv_writer.writeheader()
-for row in csv_reader:
-    row['start_date_description'] = row['start_date']
-    row['start_date'] = parser.parse(row['start_date'])
-    print row['start_date']
-    # csv_writer.writerow(row)
+date_offset()
