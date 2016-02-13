@@ -21,6 +21,7 @@ TODO Write a script to scrape a sample site and output its data in JSON.
 ###Assessment Criteria
 
 Your ability to effectively solve the problems posed.
+
 Your ability to solve these problems in a clear and logical manner, with tasteful design.
+
 Your ability to appropriately document and comment your code.
-When in doubt, import this.
