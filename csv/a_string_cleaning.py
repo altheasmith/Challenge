@@ -20,7 +20,7 @@ def string_cleaning(csv_file):
             print "Cleaning Bios..."
             for row in csv_reader:
                 # Removes extra whitespace from "bio" field for each row
-                row['bio'] =" ".join(row['bio'].split()))
+                row['bio'] =" ".join(row['bio'].split())
                 # Writes new spreadsheet with fixed "bio" rows
                 csv_writer.writerow(row)
             print "Cleaning Complete"
@@ -33,12 +33,11 @@ python 1_string_cleaning.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
-string_cleaning('test.csv')
+if __name__ == '__main__':
+    string_cleaning('test.csv')
 #-----------------------------------------#
 
-# To run from python shell, comment out the above line, and enter the lines
-# below into the python shell:
 '''
-from csv import string_cleaning
+from a_string_cleaning import string_cleaning
 string_cleaning('test.csv')
 '''
