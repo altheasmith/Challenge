@@ -129,6 +129,8 @@ def data_to_json():
     # Returning JSON-ified dictionary, and optional Data Print/File Dump
     #------------------------------------------------------------------------#
     # Uncomment these two lines to print the company information (unicode):
+    # Note: if running from the python shell, it will print twice unless the
+    # output is saved to a variable, due to the return statement.
     #----------------PRINT----------------#
     print "Company Data Information (Unicode Encoded):"
     pp.pprint(company_info_dict)
