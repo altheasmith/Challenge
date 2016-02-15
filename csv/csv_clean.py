@@ -42,64 +42,66 @@ def csv_clean(csv_file):
         # Setting fieldnames variable for DictWriter to use, including new column
         # for invalid dates
         fieldnames = csv_reader.fieldnames + ['start_date_description']
-        # Using pandas to create lists out of state name & abbreviation columns
-        # without opening/reading state file twice with csv module
-        state_csv = pd.read_csv('state_abbreviations.csv')
-        state_abbrs = state_csv.state_abbr.tolist()
-        state_names = state_csv.state_name.tolist()
-        # Creating solution csv file & csv DictWriter
-        with open('solution.csv', 'wb') as solution_file:
-            csv_writer = csv.DictWriter(solution_file, fieldnames=fieldnames)
-            # Writing column headings
-            csv_writer.writeheader()
-            print "Cleaning Data..."
-            for row in csv_reader:
-                # Removing extra whitespace from "bio" field for each row
-                row['bio'] = " ".join(row['bio'].split())
-                # Switching state abbreviation with state name in the spreadsheet using
-                # the index of the state abbreviations in the lists created with pandas
-                row['state'] = state_names[state_abbrs.index(row['state'])]
-                row['start_date_description'] = row['start_date']
-                # Tries parsing dates with dateutil.parser
-                try:
-                    # Dateutil.parser assigns a default value to any missing date
-                    # information. To avoid allowing incomplete dates with added
-                    # default date information to get into the validated dates data
-                    # set, this is a workaround to check whether any default values
-                    # are in any given date. Dateutil.parser allows a default date
-                    # as a parameter, so by parsing the date with two different
-                    # defaults, the end results will be different if any of the
-                    # defaults were used.
-                    #
-                    # Parses date with Oct 16, 2000 as the default:
-                    row_parse1 = parser.parse(row['start_date'],
-                                                default=datetime(2000, 10, 16)).date()
-                    # Parses date with Dec 3, 2008 as the default:
-                    row_parse2 = parser.parse(row['start_date'],
-                                                default=datetime(2008, 12, 3)).date()
-                    # Checks whether the end results are the same:
-                    if row_parse1 == row_parse2:
-                        # If they are equal and the inputted date is valid, the
-                        # start_date column is set to that valid date:
-                        row['start_date'] = row_parse1
-                        # And the start_date_description column is set to blank:
-                        row['start_date_description'] = ''
-                    else:
-                        # If the two parsed dates are not the same, but both parseable,
-                        # the date is incomplete, and incurs the ValueError exception:
-                        raise ValueError('Incomplete Date')
-                except ValueError:
-                    # If the date is unparseable by dateutil.parser, it is invalid, and
-                    # the invalid entry is put in the start_date_description column:
+        # Opens state csv file and creates csv DictReader for
+        # state_abbreviations.csv file
+        with open('state_abbreviations.csv', 'rb') as state_file:
+            state_reader = csv.DictReader(state_file)
+            # Creates dictionary with state abbr as key and state name as value
+            state_dict = {row['state_abbr']: row['state_name'] for row in state_reader}
+            # Creating solution csv file & csv DictWriter
+            with open('solution.csv', 'wb') as solution_file:
+                csv_writer = csv.DictWriter(solution_file, fieldnames=fieldnames)
+                # Writing column headings
+                csv_writer.writeheader()
+                print "Cleaning Data..."
+                for row in csv_reader:
+                    # Removing extra whitespace from "bio" field for each row
+                    row['bio'] = " ".join(row['bio'].split())
+                    # Switches state abbreviation with state name in the
+                    # spreadsheet using the dictionary created from the state
+                    # abbreviations file
+                    row['state'] = state_dict[row['state']]
                     row['start_date_description'] = row['start_date']
-                    # And the start_date column is set to blank:
-                    row['start_date'] = ''
-                # Writes new spreadsheet with fixed "bio" rows, state name instead of
-                # state abbreviation, and only validated dates in 'start_date' column,
-                # and incomplete/invalid dates in the 'start_date_description' column:
-                csv_writer.writerow(row)
-            print "Cleaning Complete"
-            # Nothing to return - output is in csv file
+                    # Tries parsing dates with dateutil.parser
+                    try:
+                        # Dateutil.parser assigns a default value to any missing date
+                        # information. To avoid allowing incomplete dates with added
+                        # default date information to get into the validated dates data
+                        # set, this is a workaround to check whether any default values
+                        # are in any given date. Dateutil.parser allows a default date
+                        # as a parameter, so by parsing the date with two different
+                        # defaults, the end results will be different if any of the
+                        # defaults were used.
+                        #
+                        # Parses date with Oct 16, 2000 as the default:
+                        row_parse1 = parser.parse(row['start_date'],
+                                                    default=datetime(2000, 10, 16)).date()
+                        # Parses date with Dec 3, 2008 as the default:
+                        row_parse2 = parser.parse(row['start_date'],
+                                                    default=datetime(2008, 12, 3)).date()
+                        # Checks whether the end results are the same:
+                        if row_parse1 == row_parse2:
+                            # If they are equal and the inputted date is valid, the
+                            # start_date column is set to that valid date:
+                            row['start_date'] = row_parse1
+                            # And the start_date_description column is set to blank:
+                            row['start_date_description'] = ''
+                        else:
+                            # If the two parsed dates are not the same, but both parseable,
+                            # the date is incomplete, and incurs the ValueError exception:
+                            raise ValueError('Incomplete Date')
+                    except ValueError:
+                        # If the date is unparseable by dateutil.parser, it is invalid, and
+                        # the invalid entry is put in the start_date_description column:
+                        row['start_date_description'] = row['start_date']
+                        # And the start_date column is set to blank:
+                        row['start_date'] = ''
+                    # Writes new spreadsheet with fixed "bio" rows, state name instead of
+                    # state abbreviation, and only validated dates in 'start_date' column,
+                    # and incomplete/invalid dates in the 'start_date_description' column:
+                    csv_writer.writerow(row)
+                print "Cleaning Complete"
+                # Nothing to return - output is in csv file
 
 # To run from command line:
 '''

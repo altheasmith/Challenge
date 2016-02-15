@@ -6,34 +6,36 @@
 # state abbreviation with its associated state name from the data dictionary.
 
 import csv
-import pandas as pd
 
 def code_swap(csv_file):
     print "Reading CSV..."
-    # Opens csv file and creating csv DictReader for test.csv file
+    # Opens csv file and creates csv DictReader for test.csv file
     with open(csv_file, 'rb') as initial_file:
         csv_reader = csv.DictReader(initial_file)
-        # Creates lists out of state name & abbreviation columns with pandas to
-        # avoid opening/reading state file twice with csv module
-        state_csv = pd.read_csv('state_abbreviations.csv')
-        state_abbrs = state_csv.state_abbr.tolist()
-        state_names = state_csv.state_name.tolist()
         # Sets fieldnames variable for DictWriter to use
         fieldnames = csv_reader.fieldnames
-        # Creates solution csv file & csv DictWriter
-        with open('solution.csv', 'wb') as solution_file:
-            csv_writer = csv.DictWriter(solution_file, fieldnames=fieldnames)
-            # Writes column headings
-            csv_writer.writeheader()
-            print "Replacing State Abbreviation with State Name..."
-            for row in csv_reader:
-                # Switches state abbreviation with state name in the spreadsheet using
-                # the index of the state abbreviations in the lists created with pandas
-                row['state'] = state_names[state_abbrs.index(row['state'])]
-                # Writes solution csv with state name instead of state abbreviation
-                csv_writer.writerow(row)
-            print "Replacement Complete"
-            # Nothing to return - output is in csv file
+        # Opens state csv file and creates csv DictReader for
+        # state_abbreviations.csv file
+        with open('state_abbreviations.csv', 'rb') as state_file:
+            state_reader = csv.DictReader(state_file)
+            # Creates dictionary with state abbr as key and state name as value
+            state_dict = {row['state_abbr']: row['state_name'] for row in state_reader}
+            # Creates solution csv file & csv DictWriter
+            with open('solution.csv', 'wb') as solution_file:
+                csv_writer = csv.DictWriter(solution_file, fieldnames=fieldnames)
+                # Writes column headings
+                csv_writer.writeheader()
+                print "Replacing State Abbreviation with State Name..."
+                for row in csv_reader:
+                    # Switches state abbreviation with state name in the
+                    # spreadsheet using the dictionary created from the state
+                    # abbreviations file
+                    row['state'] = state_dict[row['state']]
+                    # Writes solution csv with state name instead of state
+                    # abbreviation
+                    csv_writer.writerow(row)
+                print "Replacement Complete"
+                # Nothing to return - output is in csv file
 
 
 # To run from command line:
