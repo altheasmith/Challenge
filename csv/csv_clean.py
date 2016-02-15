@@ -32,9 +32,41 @@
 import csv
 from datetime import datetime
 import dateutil.parser as parser
-import pandas as pd
 
 def csv_clean(csv_file):
+    '''
+    This function opens and reads a csv file with a 'bio' field, a 'state'
+    field, and a 'start_date' field.
+
+    The function removes extra whitespace characters from the 'bio' field,
+    resulting in a single-space delimited text field. The original CSV file and
+    the resulting CSV use csv.QUOTE_MIMIMAL to determine which fields are
+    surrounded by quotes. As a result, the bio field is quoted in the original
+    and not quoted in the solution, as it no longer contains characters
+    requiring the field to be quoted.
+
+    The function also replaces state abbreviations in the 'state' field with
+    the full state name, using a dictionary lookup created with another CSV
+    file with a state abbreviation and a state name column.
+
+    Finally, the function determines whether the content of the 'start_date'
+    field in each line is a valid date using the dateutil parser. If the date
+    is valid, it is left in the 'start_date' field, and if not, it is moved to
+    a newly created 'start_date_description' field.
+
+    Args:
+        csv_file (csv file): A CSV file in the same directory as the string
+        cleaning module, with 'bio', 'state', and 'start_date' fields.
+    Returns:
+        A csv file in the same directory called 'solution.csv', with extra
+        whitespace characters cleaned from the 'bio' field, the full state name
+        in the 'state' field instead of the state abbreviation, and only
+        validated dates in the 'start_date' field, and invalid or incomplete
+        dates in a new 'start_date_description' field.
+    Raises:
+        ValueError, if the dateutil parser determines the startdate is
+        incomplete.
+    '''
     print "Reading CSV..."
     # Opening csv file and creating csv DictReader:
     with open(csv_file, 'rb') as initial_file:
@@ -103,14 +135,15 @@ def csv_clean(csv_file):
                 print "Cleaning Complete"
                 # Nothing to return - output is in csv file
 
+
+if __name__ == '__main__':
+    csv_clean('test.csv')
+
+
 # To run from command line:
 '''
 python csv_clean.py
 '''
-#------FOR RUNNING FROM COMMAND LINE------#
-if __name__ == '__main__':
-    csv_clean('test.csv')
-#-----------------------------------------#
 
 # To run from python shell:
 '''

@@ -31,27 +31,83 @@ pp = pprint.PrettyPrinter()
 # Helper Functions
 #-----------------------------------------------------------------------------#
 def get_soup(url):
-    # Returns all html data for a given webpage via Beautiful Soup
+    '''
+    This function uses the BeautifulSoup module to return the HTML on a page
+    for any given URL.
+
+    Args:
+        url (string): the URL for the webpage from which to scrape all HTML.
+    Returns:
+        A BeautifulSoup result set with all HTML for the page.
+    '''
     page = requests.get(url)
     soup = BeautifulSoup(page.text)
     return soup
 
 def check_for_table(page_num):
-    # Determines whether there is company info on a page.
-    # This function uses beautiful soup to check for table data instead of
-    # checking the status code of the page, because pages without data (e.g. 11,
-    # 12) still return status code of 200
+    '''
+    This function determines whether there are company links on a webpage using
+    the BeautifulSoup module, in order to determine whether the page needs to be
+    scraped. It checks for a table via BeautifulSoup instead of just checking
+    the status code of the page with the requests module, because even pages
+    with no company information (e.g. 11, 12) still return a successful status
+    code (200). There are now ten pages with company links on them, and this
+    function would allow the same module to be used even if pages were added or
+    removed.
+
+    Args:
+        page_num (integer): the page number in the company data domain on which
+        to search for company links.
+    Returns:
+        A Boolean value, True if there are company links on the page, False if
+        not.
+    '''
     soup = get_soup(domain + next_slug + str(page_num))
     if soup.table:
         return True
     else:
         return False
 
-def company_info(company_link):
-    # Gets company info and returns the dictionary of company info and the
-    # company name, which will serve as the key - value pair respectively in
-    # the final dictionary of info.
+def scrape_links(page_num):
+    '''
+    This function uses BeautifulSoup to return all of the company links on a
+    specific page within the company information domain.
+
+    Args:
+        page_num (integer): the page number of the webpage from which to scrape
+        all company links.
+    Returns:
+        A list of all company links on the page.
+    '''
+    # Gets all company links on a single page:
     #------------------------------------------------------------------------#
+    # Creates url for the page number specified by page_num
+    url = domain + next_slug + str(page_num)
+    # Returns all table rows on page, as data is stored in a table:
+    soup = get_soup(url)
+    # Finds and returns all link html tags within a table on the page, as
+    # company data is only stored in the table. The company info links can also
+    # be found if all links are returned and checked against the regex:
+    # '\/companies\/(\w+\s*)+':
+    link_tags = soup.table.find_all('a')
+    # Pulls text of relative link from each html link tag:
+    company_links = [link['href'] for link in link_tags]
+    # Returns list of company links for the page
+    return company_links
+
+def company_info(company_link):
+    '''
+    This function returns all company info on a page as a single dictionary
+    entry, in the correct format to be added to the final dictionary of all
+    collected company information.
+
+    Args:
+        company_link (string): the string to append to the end of the company
+        information domain to get to the company page.
+    Returns:
+        A dictionary of a single company's information, with the company name
+        as the key, and a dictionary of all company info as the value.
+    '''
     # Creates url to scrape for company info:
     url = domain + company_link
     # Retrieves webpage as html "soup" with Beautiful Soup/get_soup() function:
@@ -70,28 +126,24 @@ def company_info(company_link):
     # Returns company data & data variables:
     return company_name, info_dict
 
-def scrape_links(page_num):
-    # Gets all company links on a single page:
-    #------------------------------------------------------------------------#
-    # Creates url for the page number specified by page_num
-    url = domain + next_slug + str(page_num)
-    # Returns all table rows on page, as data is stored in a table:
-    soup = get_soup(url)
-    # Finds and returns all link html tags within a table on the page, as
-    # company data is only stored in the table. The company info links can also
-    # be found if all links are returned and checked against the regex:
-    # '\/companies\/(\w+\s*)+':
-    link_tags = soup.table.find_all('a')
-    # Pulls text of relative link from each html link tag:
-    company_links = [link['href'] for link in link_tags]
-    # Returns list of company links for the page
-    return company_links
 
 #=============================================================================#
 
 def data_to_json():
-    # Function to scrape all company data from the set of pages beginning at
-    # http://data-interview.enigmalabs.org/companies/, and return it as JSON
+    '''
+    This function uses the helper functions get_soup, check_for_table,
+    scrape_links, and company_info to iterate through all pages of company
+    links and company information pages within the company information domain
+    (http://data-interview.enigmalabs.org/companies/) and return all of the
+    company data in JSON.
+
+    Args:
+        N/A
+    Returns:
+        A JSON object of all company information. The keys are the company
+        names, and the values are the dictionaries of company information
+        retrieved from each company information page.
+    '''
     #------------------------------------------------------------------------#
     # Initializing Values
     #------------------------------------------------------------------------#
@@ -106,7 +158,7 @@ def data_to_json():
     #------------------------------------------------------------------------#
     # Scraping all company links from all pages with data:
     #------------------------------------------------------------------------#
-    # Checks if there is table data on the page using check_for_data function:
+    # Checks if there is table data on the page using check_for_table function:
     while check_for_table(page_num):
         print "Scraping company links from page " + str(page_num) + "..."
         # Returns list of company links with scrape_links function, per page
@@ -142,15 +194,15 @@ def data_to_json():
     #------------------------------------#
     return company_info_json
 
+
+if __name__ == '__main__':
+    data_to_json()
+
+
 # To run from command line:
 '''
 python scrape.py
 '''
-
-#------FOR RUNNING FROM COMMAND LINE------#
-if __name__ == '__main__':
-    data_to_json()
-#-----------------------------------------#
 
 # To run from python shell:
 '''

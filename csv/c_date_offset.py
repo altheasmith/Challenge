@@ -13,6 +13,24 @@ from datetime import datetime
 import dateutil.parser as parser
 
 def date_offset(csv_file):
+    '''
+    This function opens and reads a csv file with a 'start_date' field, and
+    determines whether the content of the field in each line is a valid date
+    using the dateutil parser. If the date is valid, it is left in the
+    'start_date' field, and if not, it is moved to a newly created
+    'start_date_description' field.
+
+    Args:
+        csv_file (csv file): A CSV file in the same directory as the string
+        cleaning module, with a 'start_date' field.
+    Returns:
+        A csv file in the same directory called 'solution.csv', with only
+        validated dates in the 'start_date' field, and invalid or incomplete
+        dates in a new 'start_date_description' field.
+    Raises:
+        ValueError, if the dateutil parser determines the startdate is
+        incomplete.
+    '''
     print "Reading CSV..."
     # Opens csv file and creating csv DictReader:
     with open(csv_file, 'rb') as initial_file:
@@ -70,15 +88,14 @@ def date_offset(csv_file):
             # Nothing to return - output is in csv file
 
 
+if __name__ == '__main__':
+    date_offset('test.csv')
+
+
 # To run from command line:
 '''
 python c_date_offset.py
 '''
-
-#------FOR RUNNING FROM COMMAND LINE------#
-if __name__ == '__main__':
-    date_offset('test.csv')
-#-----------------------------------------#
 
 # To run from python shell:
 '''

@@ -8,6 +8,19 @@
 import csv
 
 def code_swap(csv_file):
+    '''
+    This function opens and reads a csv file with a 'state' field, and replaces
+    state abbreviations in the 'state' field with the full state name, using
+    a dictionary lookup created with another CSV file with a state abbreviation
+    and a state name column.
+
+    Args:
+        csv_file (csv file): A CSV file in the same directory as the string
+        cleaning module, with a 'state' field.
+    Returns:
+        A csv file in the same directory called 'solution.csv', with the full
+        state name in the 'state' field instead of the state abbreviation.
+    '''
     print "Reading CSV..."
     # Opens csv file and creates csv DictReader for test.csv file
     with open(csv_file, 'rb') as initial_file:
@@ -38,15 +51,14 @@ def code_swap(csv_file):
                 # Nothing to return - output is in csv file
 
 
+if __name__ == '__main__':
+    code_swap('test.csv')
+
+
 # To run from command line:
 '''
 python b_code_swap.py
 '''
-
-#------FOR RUNNING FROM COMMAND LINE------#
-if __name__ == '__main__':
-    code_swap('test.csv')
-#-----------------------------------------#
 
 # To run from python shell:
 '''
