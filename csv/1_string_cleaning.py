@@ -40,5 +40,5 @@ string_cleaning('test.csv')
 # below into the python shell:
 '''
 from csv import string_cleaning
-string_cleaning()
+string_cleaning('test.csv')
 '''
