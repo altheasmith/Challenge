@@ -37,6 +37,7 @@ if __name__ == '__main__':
     string_cleaning('test.csv')
 #-----------------------------------------#
 
+# To run from python shell 
 '''
 from a_string_cleaning import string_cleaning
 string_cleaning('test.csv')

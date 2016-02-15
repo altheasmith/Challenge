@@ -76,11 +76,11 @@ python 3_date_offset.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
-date_offset('test.csv')
+if __name__ == '__main__':
+    date_offset('test.csv')
 #-----------------------------------------#
 
-# To run from python shell, comment out the above line, and enter the lines
-# below into the python shell:
+# To run from python shell:
 '''
 from csv import date_offset
 date_offset('test.csv')

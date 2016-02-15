@@ -44,12 +44,12 @@ python 2_code_swap.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
-code_swap('test.csv')
+if __name__ == '__main__':
+    code_swap('test.csv')
 #-----------------------------------------#
 
-# To run from python shell, comment out the above line, and enter the lines
-# below into the python shell:
+# To run from python shell:
 '''
-from csv import code_swap
-code_swap()
+from b_code_swap import code_swap
+code_swap('test.csv')
 '''

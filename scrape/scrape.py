@@ -146,11 +146,11 @@ python scrape.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
-data_to_json()
+if __name__ == '__main__':
+    data_to_json()
 #-----------------------------------------#
 
-# To run from python shell, comment out the above line, and enter the lines
-# below into the python shell:
+# To run from python shell:
 '''
 from scrape import data_to_json
 data_to_json()

@@ -107,13 +107,12 @@ def csv_clean(csv_file):
 '''
 python csv_clean.py
 '''
-
 #------FOR RUNNING FROM COMMAND LINE------#
-csv_clean('test.csv')
+if __name__ == '__main__':
+    csv_clean('test.csv')
 #-----------------------------------------#
 
-# To run from python shell, comment out the above line, and enter the lines
-# below into the python shell:
+# To run from python shell:
 '''
 from csv import csv_clean
 csv_clean('test.csv')
