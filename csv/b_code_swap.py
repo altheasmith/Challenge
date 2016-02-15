@@ -40,7 +40,7 @@ def code_swap(csv_file):
 
 # To run from command line:
 '''
-python 2_code_swap.py
+python b_code_swap.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#

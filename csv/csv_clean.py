@@ -114,6 +114,6 @@ if __name__ == '__main__':
 
 # To run from python shell:
 '''
-from csv import csv_clean
+from csv_clean import csv_clean
 csv_clean('test.csv')
 '''

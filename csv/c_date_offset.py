@@ -72,7 +72,7 @@ def date_offset(csv_file):
 
 # To run from command line:
 '''
-python 3_date_offset.py
+python c_date_offset.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
@@ -82,6 +82,6 @@ if __name__ == '__main__':
 
 # To run from python shell:
 '''
-from csv import date_offset
+from c_date_offset import date_offset
 date_offset('test.csv')
 '''

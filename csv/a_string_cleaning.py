@@ -29,7 +29,7 @@ def string_cleaning(csv_file):
 
 # To run from command line:
 '''
-python 1_string_cleaning.py
+python a_string_cleaning.py
 '''
 
 #------FOR RUNNING FROM COMMAND LINE------#
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     string_cleaning('test.csv')
 #-----------------------------------------#
 
-# To run from python shell 
+# To run from python shell
 '''
 from a_string_cleaning import string_cleaning
 string_cleaning('test.csv')
