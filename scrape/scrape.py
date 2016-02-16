@@ -189,8 +189,8 @@ def data_to_json():
     #-------------------------------------#
     # Uncomment these two lines to save the JSON data to a file:
     #----------------SAVE----------------#
-    # with open('company_data.json', 'w') as outfile:
-    #     json.dump(company_info_dict, outfile)
+    with open('solution.json', 'w') as outfile:
+        json.dump(company_info_dict, outfile)
     #------------------------------------#
     return company_info_json
 
