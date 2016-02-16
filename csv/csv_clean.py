@@ -51,8 +51,8 @@ def csv_clean(csv_file):
 
     Finally, the function determines whether the content of the 'start_date'
     field in each line is a valid date using the dateutil parser. If the date
-    is valid, it is left in the 'start_date' field, and if not, it is moved to
-    a newly created 'start_date_description' field.
+    is valid, it is left in the 'start_date' field in ISO 8601 format, and if
+    not, it is moved to a newly created 'start_date_description' field.
 
     Args:
         csv_file (csv file): A CSV file in the same directory as the string

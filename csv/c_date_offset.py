@@ -25,8 +25,8 @@ def date_offset(csv_file):
         cleaning module, with a 'start_date' field.
     Returns:
         A csv file in the same directory called 'solution.csv', with only
-        validated dates in the 'start_date' field, and invalid or incomplete
-        dates in a new 'start_date_description' field.
+        validated dates in the 'start_date' field in ISO 8601 format, and
+        invalid or incomplete dates in a new 'start_date_description' field.
     Raises:
         ValueError, if the dateutil parser determines the startdate is
         incomplete.
